@@ -1,27 +1,44 @@
-const fs = require('fs');
+const { copyFileSync } = require('fs');
+const path = require('path');
 const a11yReport = require('@daniel.husar/a11y-report');
 const express = require('express');
 const glob = require('glob');
 const axe = require.resolve('axe-core');
-const { publicFolder, port, excludeFiles, ...restConfig } = require('./config');
 
-module.exports = () => {
-  fs.copyFileSync(axe, `${publicFolder}/axe.js`);
-  const files = glob
-    .sync(`${publicFolder}/**/*.html`)
-    .map(file => file.replace(publicFolder, '').replace(/\/?index\.html$/, '/') || '/')
-    .sort();
+const baseConfig = {
+  port: 9001,
+  folder: 'public',
+  exitProcess: true,
+  excludeFiles: [],
+};
 
-  const app = express();
-  app.use(express.static(publicFolder, { redirect: false }));
-  const server = app.listen(port, async () => {
-    const reportConfig = {
-      ...restConfig,
-      urls: files.map(file => `http://localhost:${port}${file}`),
-      axeUrl: '/axe.js',
+module.exports = userConfig =>
+  new Promise((resolve, reject) => {
+    const config = {
+      ...baseConfig,
+      ...userConfig,
     };
 
-    const { failures } = await a11yReport(reportConfig);
-    server.close(() => process.exit(failures ? 1 : 0));
+    copyFileSync(axe, path.join(config.folder, '/axe.js'));
+    const files = glob
+      .sync(`${config.folder}/**/*.html`)
+      .filter(file => !config.excludeFiles.includes(file.replace(`${config.folder}/`, '')))
+      .map(file => file.replace(config.folder, '').replace(/\/?index\.html$/, '/') || '/')
+      .sort();
+
+    const app = express();
+    app.use(express.static(config.folder, { redirect: false }));
+    const server = app.listen(config.port, async () => {
+      const reportConfig = {
+        ...userConfig,
+        urls: files.map(file => `http://localhost:${config.port}${file}`),
+        axeUrl: '/axe.js',
+      };
+
+      const { failures } = await a11yReport(reportConfig);
+      server.close(() => {
+        if (config.exitProcess) process.exit(failures ? 1 : 0);
+        else return failures ? reject(failures) : resolve();
+      });
+    });
   });
-};

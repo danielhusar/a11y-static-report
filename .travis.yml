@@ -4,13 +4,3 @@ node_js:
 notifications:
   email: false
 cache: yarn
-
-deploy:
-  provider: pages
-  skip-cleanup: true
-  github-token: $GITHUB_TOKEN
-  keep-history: true
-  local-dir: public
-  on:
-    branch: master
-
