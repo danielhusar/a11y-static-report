@@ -18,16 +18,17 @@ module.exports = userConfig =>
       ...baseConfig,
       ...userConfig,
     };
+    const folder = path.join(process.cwd(), config.folder);
 
-    copyFileSync(axe, path.join(config.folder, '/axe.js'));
+    copyFileSync(axe, path.join(folder, 'axe.js'));
     const files = glob
-      .sync(`${config.folder}/**/*.html`)
-      .filter(file => !config.excludeFiles.includes(file.replace(`${config.folder}/`, '')))
-      .map(file => file.replace(config.folder, '').replace(/\/?index\.html$/, '/') || '/')
+      .sync(`${folder}/**/*.html`)
+      .filter(file => !config.excludeFiles.includes(file.replace(`${folder}/`, '')))
+      .map(file => file.replace(folder, '').replace(/\/?index\.html$/, '/') || '/')
       .sort();
 
     const app = express();
-    app.use(express.static(config.folder, { redirect: false }));
+    app.use(express.static(folder, { redirect: false }));
     const server = app.listen(config.port, async () => {
       const reportConfig = {
         ...userConfig,
