@@ -9,6 +9,7 @@ const baseConfig = {
   port: 9001,
   folder: 'public',
   excludeFiles: [],
+  debug: false,
 };
 
 module.exports = userConfig =>
@@ -21,6 +22,8 @@ module.exports = userConfig =>
     if (!existsSync(folder)) {
       return reject(new Error('Folder does not exists'));
     }
+
+    if (config.debug) console.log('folder:', folder);
 
     copyFileSync(axe, path.join(folder, 'axe.js'));
     const urls = glob
@@ -40,6 +43,8 @@ module.exports = userConfig =>
         urls,
         axeUrl: '/axe.js',
       };
+
+      if (config.debug) console.log('config:', reportConfig);
 
       const { failures } = await a11yReport(reportConfig);
       server.close(() => (failures ? reject() : resolve()));
