@@ -1,7 +1,7 @@
 # a11y-static-report [![Build Status](https://travis-ci.org/danielhusar/a11y-static-report.svg?branch=master)](https://travis-ci.org/danielhusar/a11y-static-report)
 > Run accessibility report on static pages via [axe-core](https://github.com/dequelabs/axe-core)
 
-![screenshot.png](screenshot.png)
+![screenshot.gif](screenshot.gif)
 
 ## How it works
 
