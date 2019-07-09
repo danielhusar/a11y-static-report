@@ -1,7 +1,7 @@
 {
-  "name": "@daniel.husar/a11y-report",
+  "name": "@daniel.husar/a11y-static-report",
   "version": "1.0.0",
-  "description": "Accessibility report via axe",
+  "description": "Accessibility report via axe for static pages",
   "scripts": {
     "test": "npm run lint && npm run unit",
     "unit": "jest",
@@ -9,23 +9,31 @@
   },
   "main": "index.js",
   "bin": {
-    "a11y-report": "cli.js"
+    "a11y-static-report": "cli.js"
   },
   "author": "Daniel Husar",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/danielhusar/a11y-report.git"
+    "url": "git+https://github.com/danielhusar/a11y-static-report.git"
   },
   "keywords": [
     "accessibility",
-    "a11y"
+    "a11y",
+    "static",
+    "pages",
+    "gatsby",
+    "jekyll",
+    "report",
+    "ci",
+    "axe",
+    "axe-core"
   ],
   "license": "MIT",
   "private": false,
   "bugs": {
-    "url": "https://github.com/danielhusar/a11y-report/issues"
+    "url": "https://github.com/danielhusar/a11y-static-report/issues"
   },
-  "homepage": "https://github.com/danielhusar/a11y-report#readme",
+  "homepage": "https://github.com/danielhusar/a11y-static-report#readme",
   "dependencies": {
     "@daniel.husar/a11y-report": "^1.0.0",
     "axe-core": "^3.2.2",
