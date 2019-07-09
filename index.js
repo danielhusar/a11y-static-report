@@ -1,4 +1,4 @@
-const { copyFileSync } = require('fs');
+const { copyFileSync, existsSync } = require('fs');
 const path = require('path');
 const a11yReport = require('@daniel.husar/a11y-report');
 const express = require('express');
@@ -8,7 +8,6 @@ const axe = require.resolve('axe-core');
 const baseConfig = {
   port: 9001,
   folder: 'public',
-  exitProcess: true,
   excludeFiles: [],
 };
 
@@ -19,12 +18,18 @@ module.exports = userConfig =>
       ...userConfig,
     };
     const folder = path.join(process.cwd(), config.folder);
+    if (!existsSync(folder)) {
+      return reject(new Error('Folder does not exists'));
+    }
 
     copyFileSync(axe, path.join(folder, 'axe.js'));
-    const files = glob
+    const urls = glob
       .sync(`${folder}/**/*.html`)
       .filter(file => !config.excludeFiles.includes(file.replace(`${folder}/`, '')))
-      .map(file => file.replace(folder, '').replace(/\/?index\.html$/, '/') || '/')
+      .map(file => {
+        const path = file.replace(folder, '').replace(/\/?index\.html$/, '/') || '/';
+        return `http://localhost:${config.port}${path}`;
+      })
       .sort();
 
     const app = express();
@@ -32,14 +37,11 @@ module.exports = userConfig =>
     const server = app.listen(config.port, async () => {
       const reportConfig = {
         ...userConfig,
-        urls: files.map(file => `http://localhost:${config.port}${file}`),
+        urls,
         axeUrl: '/axe.js',
       };
 
       const { failures } = await a11yReport(reportConfig);
-      server.close(() => {
-        if (config.exitProcess) process.exit(failures ? 1 : 0);
-        else return failures ? reject(failures) : resolve();
-      });
+      server.close(() => (failures ? reject() : resolve()));
     });
   });
