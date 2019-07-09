@@ -37,12 +37,12 @@ Prints accessibility report with logger function and returns promise that resolv
 
 #### config
 
-| Property        | Type                    | Default   | Description |
-| :---------------| :---------------------- | :---------| :---------- |
-| `port`          | `number`                | `9001`    | Port on which static server will start. |
-| `folder`        | `string`                | `public`  | Folder with static files to serve. |
-| `excludeFiles`  | `array<string|RegExp>`  | `[]`      | Array of files to ignore. Could be string or RegExp. Example `['blog/index.html', /^de\/blog/]` |
-| `debug`         | `boolean`               | `false`   | Prints debug messages. |
+| Property        | Type                      | Default   | Description |
+| :---------------| :------------------------ | :---------| :---------- |
+| `port`          | `number`                  | `9001`    | Port on which static server will start. |
+| `folder`        | `string`                  | `public`  | Folder with static files to serve. |
+| `excludeFiles`  | `array<string∣RegExp>` | `[]`      | Array of files to ignore. Could be string or RegExp. Example `['blog/index.html', /^de\/blog/]` |
+| `debug`         | `boolean`                 | `false`   | Prints debug messages. |
 
 Every other option that you pass, will be forwarded into [a11y-report](https://github.com/danielhusar/a11y-report#config).
 
