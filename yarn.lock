@@ -139,10 +139,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@daniel.husar/a11y-report@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@daniel.husar/a11y-report/-/a11y-report-1.0.0.tgz#81bbf68c3fa39c9bb78dee6374a0a4fbc705f713"
-  integrity sha512-Pen3rn/39ToHPGTi+w+k4JjBqO1OQXJbyZfY4VMuwdKhziVOszu6IrReKIbRF+FpRYcq22U8Aa4D5UBviQlrrw==
+"@daniel.husar/a11y-report@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@daniel.husar/a11y-report/-/a11y-report-1.0.1.tgz#106f265f594e6b7b2f2bf6fad663261196c6b83b"
+  integrity sha512-5EiKiYmeS4aWYQH0ZmFfGJWAMWha+RDeKGN4RXmbrwbfQnAo43PrFQvomZZOsnuYvn2i3QPZh/gP8bOqmHsNsg==
   dependencies:
     axe-core "^3.2.2"
     chalk "^2.4.2"
@@ -1132,6 +1132,11 @@ escape-string-regexp@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
+
+escape-string-regexp@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-2.0.0.tgz#a30304e99daa32e23b2fd20f51babd07cffca344"
+  integrity sha512-UpzcLCXolUWcNu5HtVMHYdXJjArjsF9C0aNnquZYY4uW/Vu0miy5YoWvbV345HauVvcAUnpRuhMMcqTcGOY2+w==
 
 escodegen@^1.9.1:
   version "1.11.1"

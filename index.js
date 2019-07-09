@@ -4,6 +4,7 @@ const a11yReport = require('@daniel.husar/a11y-report');
 const express = require('express');
 const glob = require('glob');
 const axe = require.resolve('axe-core');
+const escapeStringRegexp = require('escape-string-regexp');
 
 const baseConfig = {
   port: 9001,
@@ -23,17 +24,29 @@ module.exports = userConfig =>
       return reject(new Error('Folder does not exists'));
     }
 
-    if (config.debug) console.log('folder:', folder);
+    if (config.debug) console.log('User Config:', userConfig);
+    if (config.debug) console.log('Folder:', folder);
 
     copyFileSync(axe, path.join(folder, 'axe.js'));
     const urls = glob
       .sync(`${folder}/**/*.html`)
-      .filter(file => !config.excludeFiles.includes(file.replace(`${folder}/`, '')))
+      .filter(file => {
+        const path = file.replace(`${folder}/`, '');
+        return !config.excludeFiles.some(exclude => {
+          if (typeof exclude === 'string') {
+            exclude = new RegExp(`^${escapeStringRegexp(exclude)}$`);
+          }
+
+          return path.match(exclude);
+        });
+      })
       .map(file => {
         const path = file.replace(folder, '').replace(/\/?index\.html$/, '/') || '/';
         return `http://localhost:${config.port}${path}`;
       })
       .sort();
+
+    if (config.debug) console.log('Urls:', urls);
 
     const app = express();
     app.use(express.static(folder, { redirect: false }));
@@ -44,7 +57,7 @@ module.exports = userConfig =>
         axeUrl: '/axe.js',
       };
 
-      if (config.debug) console.log('config:', reportConfig);
+      if (config.debug) console.log('Config:', reportConfig);
 
       const { failures } = await a11yReport(reportConfig);
       server.close(() => (failures ? reject() : resolve()));

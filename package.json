@@ -35,8 +35,9 @@
   },
   "homepage": "https://github.com/danielhusar/a11y-static-report#readme",
   "dependencies": {
-    "@daniel.husar/a11y-report": "^1.0.0",
+    "@daniel.husar/a11y-report": "^1.0.1",
     "axe-core": "^3.2.2",
+    "escape-string-regexp": "^2.0.0",
     "express": "^4.17.1",
     "glob": "^7.1.4",
     "yargs": "^13.2.4"
