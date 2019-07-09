@@ -1,6 +1,6 @@
 {
   "name": "@daniel.husar/a11y-static-report",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Accessibility report via axe for static pages",
   "scripts": {
     "test": "npm run lint && npm run unit",
