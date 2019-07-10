@@ -5,7 +5,8 @@
 
 ## How it works
 
-It starts the static webserver and look up for all `html` files inside of it. From the html files we generate routes and use them as input for [a11y-report](https://github.com/danielhusar/a11y-report).
+It starts the express webserver that will serve static files from provided folder.
+Next we look up all `html` files inside of that folder. From those html files we generate routes and use them as urls for [a11y-report](https://github.com/danielhusar/a11y-report).
 
 ## Install
 
@@ -50,7 +51,7 @@ Every other option that you pass, will be forwarded into [a11y-report](https://g
 
 ```sh
 yarn add --dev @daniel.husar/a11y-static-report
-yarn a11y-static-report --folder=out
+yarn a11y-static-report --folder=out --reporter=simple
 ```
 
 For more complex config options you can use `.a11yrc` file in the root of your project:
